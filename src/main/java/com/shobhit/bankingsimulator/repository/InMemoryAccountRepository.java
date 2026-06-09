@@ -21,4 +21,18 @@ public void save(Account account){
     }
     accounts.put(account.getAccountNumber(), account);
 }
+
+@Override
+public Account findByAccountNumber(long accountNumber){
+    if(!accounts.containsKey(accountNumber)){
+        throw new InvalidAccountException("Account Not Found");
+    }
+    return accounts.get(accountNumber);
+}
+
+@Override
+public void deleteAccount(long accountNumber){
+    accounts.remove(accountNumber);
+}
+
 }
