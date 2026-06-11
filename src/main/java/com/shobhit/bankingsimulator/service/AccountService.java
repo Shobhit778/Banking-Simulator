@@ -1,5 +1,6 @@
 package com.shobhit.bankingsimulator.service;
 
+import com.shobhit.bankingsimulator.enums.TransactionType;
 import com.shobhit.bankingsimulator.exception.InsufficientBalanceException;
 import com.shobhit.bankingsimulator.exception.InvalidAmountException;
 import com.shobhit.bankingsimulator.model.Account;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Service;
 public class AccountService {
 
     private AccountRepository repository;
+    private TransactionService transactionService;
     private long nextAccountNumber=1001;
 
     @Autowired
-    public AccountService(AccountRepository repository){
+    public AccountService(AccountRepository repository, TransactionService transactionService){
         this.repository = repository;
+        this.transactionService = transactionService;
     }
 
     //Account Create method
@@ -39,6 +42,8 @@ public class AccountService {
         }
         Account account = getAccountDetails(accountNumber);
         account.setBalance(account.getBalance() + amount);
+
+        transactionService.recordTransaction(accountNumber, TransactionType.DEPOSIT, amount);
         return account.getBalance();
     }
 
@@ -52,6 +57,8 @@ public class AccountService {
             throw new InsufficientBalanceException("Withdraw amount must be less than or equal to the current balance");
         }
         account.setBalance(account.getBalance() - amount);
+
+        transactionService.recordTransaction(accountNumber, TransactionType.WITHDRAW, amount);
         return account.getBalance();
     }
 

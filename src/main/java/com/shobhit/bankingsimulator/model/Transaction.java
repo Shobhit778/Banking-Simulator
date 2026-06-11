@@ -1,34 +1,38 @@
 package com.shobhit.bankingsimulator.model;
 
+import com.shobhit.bankingsimulator.enums.TransactionType;
+
+import java.time.LocalDateTime;
+
 public class Transaction {
 
-    private int transactionId;
+    private long transactionId;
     private long accountNumber;
-    private String transactionType;
+    private TransactionType transactionType;
     private double amount;
-    private String transactionDate;
+    private LocalDateTime transactionDate;
 
-    public Transaction(int transactionId, long accountNumber, String transactionType, double amount, String transactionDate) {
-        this.transactionId = transactionId;
+    public Transaction(long transactionId, LocalDateTime transactionDate,long accountNumber, TransactionType transactionType, double amount) {
         this.accountNumber = accountNumber;
         this.transactionType = transactionType;
         this.amount = amount;
-        this.transactionDate= transactionDate;
+        this.transactionDate = transactionDate;
+        this.transactionId = transactionId;
     }
 
-    public String getTransactionDate() {
+    public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(String transactionDate) {
+    public void setTransactionDate(LocalDateTime transactionDate) {
         this.transactionDate = transactionDate;
     }
 
-    public int getTransactionId() {
+    public long getTransactionId() {
         return transactionId;
     }
 
-    public void setTransactionId(int transactionId) {
+    public void setTransactionId(long transactionId) {
         this.transactionId = transactionId;
     }
 
@@ -40,11 +44,11 @@ public class Transaction {
         this.accountNumber = accountNumber;
     }
 
-    public String getTransactionType() {
+    public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(String transactionType) {
+    public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
 

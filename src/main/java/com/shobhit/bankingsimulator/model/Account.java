@@ -1,14 +1,16 @@
 package com.shobhit.bankingsimulator.model;
 
+import com.shobhit.bankingsimulator.enums.AccountType;
+
 public class Account {
 
     private String holderName;
     private long accountNumber;
     private String phoneNumber;
-    private String accountType;
+    private AccountType accountType;
     private double balance;
 
-    public Account(String accountType, String phoneNumber, String holderName) {
+    public Account(AccountType accountType, String phoneNumber, String holderName) {
         this.accountType = accountType;
         this.phoneNumber = phoneNumber;
         this.holderName = holderName;
@@ -38,11 +40,11 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAccountType() {
+    public AccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(String accountType) {
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 
