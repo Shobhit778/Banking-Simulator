@@ -12,12 +12,12 @@ import java.util.List;
 @Service
 public class TransactionService {
 
-    private final TransactionRepository transactionRepository;
-    private long transactionCounter = 1;
-
+    private TransactionRepository transactionRepository;
+    private long transactionCounter;
     @Autowired
     public TransactionService(TransactionRepository transactionRepository){
         this.transactionRepository = transactionRepository;
+        transactionCounter = transactionRepository.getMaxTransactionId() + 1;
     }
 
     //Method to record the transaction

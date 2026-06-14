@@ -12,6 +12,9 @@ public class Transaction {
     private double amount;
     private LocalDateTime transactionDate;
 
+    public Transaction(){
+    }
+
     public Transaction(long transactionId, LocalDateTime transactionDate,long accountNumber, TransactionType transactionType, double amount) {
         this.accountNumber = accountNumber;
         this.transactionType = transactionType;

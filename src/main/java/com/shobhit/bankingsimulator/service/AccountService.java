@@ -2,6 +2,7 @@ package com.shobhit.bankingsimulator.service;
 
 import com.shobhit.bankingsimulator.enums.TransactionType;
 import com.shobhit.bankingsimulator.exception.InsufficientBalanceException;
+import com.shobhit.bankingsimulator.exception.InvalidAccountException;
 import com.shobhit.bankingsimulator.exception.InvalidAmountException;
 import com.shobhit.bankingsimulator.model.Account;
 import com.shobhit.bankingsimulator.repository.AccountRepository;
@@ -13,12 +14,13 @@ public class AccountService {
 
     private AccountRepository repository;
     private TransactionService transactionService;
-    private long nextAccountNumber=1001;
+    private long nextAccountNumber ;
 
     @Autowired
     public AccountService(AccountRepository repository, TransactionService transactionService){
         this.repository = repository;
         this.transactionService = transactionService;
+        nextAccountNumber = repository.getMaxAccountNumber() + 1 ;
     }
 
     //Account Create method
@@ -32,7 +34,11 @@ public class AccountService {
 
     //Account details fetch method
     public Account getAccountDetails(long accountNumber){
-        return repository.findByAccountNumber(accountNumber);
+        Account account = repository.findByAccountNumber(accountNumber);
+        if(account == null){
+            throw new InvalidAccountException("Account Does Not Exists ");
+        }
+        return account;
     }
 
     //Amount Deposit method
@@ -42,6 +48,8 @@ public class AccountService {
         }
         Account account = getAccountDetails(accountNumber);
         account.setBalance(account.getBalance() + amount);
+
+        repository.update(account);
 
         transactionService.recordTransaction(accountNumber, TransactionType.DEPOSIT, amount);
         return account.getBalance();
@@ -57,6 +65,8 @@ public class AccountService {
             throw new InsufficientBalanceException("Withdraw amount must be less than or equal to the current balance");
         }
         account.setBalance(account.getBalance() - amount);
+
+        repository.update(account);
 
         transactionService.recordTransaction(accountNumber, TransactionType.WITHDRAW, amount);
         return account.getBalance();

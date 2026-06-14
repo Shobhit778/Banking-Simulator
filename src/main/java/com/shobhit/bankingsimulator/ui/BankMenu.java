@@ -95,7 +95,8 @@ public class BankMenu {
             }
             Account account = new Account(accountType, phoneNumber, name);
             accountService.createAccount(account);
-        } catch (AccountAlreadyExistsException e) {
+        }
+        catch(AccountAlreadyExistsException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -165,11 +166,15 @@ public class BankMenu {
     }
 
     private void transactionDetails(){
-        try{
+        try {
             System.out.print("Enter The Account Number: ");
             long accNo = readLong();
             List<Transaction> transactionList = transactionService.showTransactionHistory(accNo);
-            System.out.println(transactionList);
+            if (transactionList.isEmpty()) {
+                System.out.println("No Transactions have been made yet");
+            } else {
+                System.out.println(transactionList);
+            }
         }
         catch (TransactionNotFoundException e){
             System.out.println(e.getMessage());

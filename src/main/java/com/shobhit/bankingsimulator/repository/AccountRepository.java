@@ -9,4 +9,8 @@ public interface AccountRepository {
     Account findByAccountNumber(long accountNumber);
 
     void deleteAccount(long accountNumber);
+
+    void update(Account account);
+
+    long getMaxAccountNumber();
 }

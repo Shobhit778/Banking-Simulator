@@ -10,6 +10,9 @@ public class Account {
     private AccountType accountType;
     private double balance;
 
+    public Account(){
+    }
+
     public Account(AccountType accountType, String phoneNumber, String holderName) {
         this.accountType = accountType;
         this.phoneNumber = phoneNumber;
